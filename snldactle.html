@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/snldactle.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <script src="assets/js/snldactle.js" defer></script>
   </head>
 
   <body>
@@ -19,122 +20,10 @@
         <button id="submit">Gjett</button>
       </label>
 
+      <div id="win" hidden>🎉 Du vant!</div>
       <div id="guesses"></div>
       <div id="article"></div>
-      <div id="win" hidden>🎉 Du vant — gratulerer med dagen!</div>
     </main>
     <div id="footer-container"></div>
-
-    <script>
-      const rawTitle = "Bursdag";
-      const rawText = `Bursdag er en persons fødselsdag, det vil si datoen personen er født. 
-		Dagen blir gjerne markert, for eksempel med selskap eller fest der den som har bursdag får gaver.`;
-
-      function normalizeWord(w) {
-        return w.replace(/^[^\w']+|[^\w']+$/g, "").toLowerCase();
-      }
-
-      function tokenize(text) {
-        // skiller ut tegnsetting
-        const re = /(\s+|[^\s]+)/g;
-        return Array.from(text.matchAll(re), (m) => m[0]);
-      }
-
-      const tokens = tokenize(rawText).map((t) => {
-        const isWord = /\w/.test(t);
-        return {
-          text: t,
-          norm: isWord ? normalizeWord(t) : null,
-          isWord,
-          revealed: false,
-        };
-      });
-
-      // Vis standardord
-      const initialRevealedWords = ["er", "en", "og", "det", "med", "for"];
-      tokens.forEach((t) => {
-        if (t.isWord && initialRevealedWords.includes(t.norm)) {
-          t.revealed = true;
-        }
-      });
-
-      const articleEl = document.getElementById("article");
-      function renderArticle() {
-        articleEl.innerHTML = "";
-        tokens.forEach((token, i) => {
-          const span = document.createElement("span");
-          span.className = "token";
-          if (token.isWord && !token.revealed) {
-            const mask = "█".repeat(normalizeWord(token.text).length);
-            span.textContent = mask;
-            span.classList.add("censored");
-            span.title = "Guess this word";
-          } else {
-            span.textContent = token.text;
-            span.classList.add("revealed");
-          }
-          articleEl.appendChild(span);
-        });
-      }
-
-      const guessInput = document.getElementById("guess");
-      const submitBtn = document.getElementById("submit");
-      const guessesEl = document.getElementById("guesses");
-      const winEl = document.getElementById("win");
-      const guessedSet = new Set();
-
-      function handleGuess(rawGuess) {
-        const g = normalizeWord(rawGuess || "");
-        if (!g) return;
-        if (guessedSet.has(g)) return; // ignorerer gjentagelser
-        guessedSet.add(g);
-        // Tidligere gjett
-        const pill = document.createElement("span");
-        pill.textContent = rawGuess;
-        pill.style.marginRight = "6px";
-        guessesEl.appendChild(pill);
-
-        // Riktig tittel?
-        if (g === normalizeWord(rawTitle)) {
-          // Vis alle
-          tokens.forEach((t) => (t.revealed = true));
-          renderArticle();
-          winEl.hidden = false;
-          return;
-        }
-
-        // Riktig ord?
-        let found = false;
-        tokens.forEach((t) => {
-          if (t.isWord && t.norm === g) {
-            t.revealed = true;
-            found = true;
-          }
-        });
-
-        if (!found) {
-          const no = document.createElement("span");
-          no.textContent = "";
-          no.style.color = "#a00";
-          guessesEl.appendChild(no);
-        }
-
-        renderArticle();
-      }
-
-      submitBtn.addEventListener("click", () => {
-        handleGuess(guessInput.value);
-        guessInput.value = "";
-        guessInput.focus();
-      });
-      guessInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          submitBtn.click();
-        }
-      });
-
-      renderArticle();
-    </script>
   </body>
 </html>

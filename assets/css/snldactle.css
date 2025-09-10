@@ -29,3 +29,6 @@ body {
   font-weight: 700;
   margin-top: 12px;
 }
+#win-image {
+	size: 25vh;
+}

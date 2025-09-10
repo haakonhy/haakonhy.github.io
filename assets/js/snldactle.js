@@ -2,6 +2,14 @@ let rawTitle = "";
 let rawText = "";
 let imageUrl = null;
 
+const articleEl = document.getElementById("article");
+const titleEl = document.getElementById("article-title");
+const guessInput = document.getElementById("guess");
+const submitBtn = document.getElementById("submit");
+const guessesEl = document.getElementById("guesses");
+const winEl = document.getElementById("win");
+const guessedSet = new Set();
+
 // Fjerner HTML fra xhtml_body
 function stripHtml(html) {
   const tmp = document.createElement("div");
@@ -28,11 +36,14 @@ function initializeGame() {
     const isWord = /\w/.test(t);
     tokens.push({
       text: t,
-      norm: isWord ? t : null,
+      norm: isWord ? normalizeWord(t) : null,
       isWord,
       revealed: false,
     });
   });
+
+  // Vis tittel
+  titleEl.textContent = "█".repeat(rawTitle.length);
 
   // Vis standardord (topp 10 frekvente)
   const initialRevealedWords = [
@@ -64,15 +75,13 @@ function normalizeWord(w) {
 
 function tokenize(text) {
   // Skiller ut tegnsetting
-  const re = /(\s+|[^\s]+)/g;
+  let re = /(\s+|[^\s]+)/g;
   return Array.from(text.matchAll(re), (m) => m[0]);
 }
 
 const tokens = [];
-const articleEl = document.getElementById("article");
 
 function renderArticle() {
-  articleEl.innerHTML = "";
   tokens.forEach((token, i) => {
     const span = document.createElement("span");
     span.className = "token";
@@ -89,12 +98,6 @@ function renderArticle() {
   });
 }
 
-const guessInput = document.getElementById("guess");
-const submitBtn = document.getElementById("submit");
-const guessesEl = document.getElementById("guesses");
-const winEl = document.getElementById("win");
-const guessedSet = new Set();
-
 function handleGuess(rawGuess) {
   const g = normalizeWord(rawGuess || "");
   if (!g) return;
@@ -108,7 +111,8 @@ function handleGuess(rawGuess) {
 
   // Riktig tittel?
   if (g === normalizeWord(rawTitle)) {
-    // Vis alle
+    // Vis tittel og alle andre 
+    titleEl.textContent = rawTitle;
     tokens.forEach((t) => (t.revealed = true));
     renderArticle();
     winEl.hidden = false;
@@ -158,7 +162,16 @@ guessInput.addEventListener("keydown", (e) => {
 });
 
 function getRandomArticle() {
-  articles = ["sperregrense", "Moldova", "Frankrike", "Chile", "Antarktis", "Senterpartiet", "sjakk", "internett"]
+  articles = [
+    "sperregrense",
+    "Moldova",
+    "Frankrike",
+    "Chile",
+    "Antarktis",
+    "Senterpartiet",
+    "sjakk",
+    "internett",
+  ];
   return articles[Math.floor(Math.random() * articles.length)];
 }
 

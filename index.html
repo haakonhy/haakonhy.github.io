@@ -11,17 +11,21 @@
       href="assets/img/favicon.ico"
     />
   </head>
+  <script>
+    async function loadComponent(url, elementId) {
+      const response = await fetch(url);
+      const text = await response.text();
+      document.getElementById(elementId).innerHTML = text;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadComponent("components/header.html", "header-container");
+      loadComponent("components/footer.html", "footer-container");
+    });
+  </script>
+
   <body>
-    <header>
-      <h1>Hei</h1>
-      <nav>
-        <a href="index.html">Hjem</a>
-        <a href="cv.html">CV</a>
-        <a href="https://github.com/haakonhy/">GitHub</a>
-        <a href="https://www.linkedin.com/in/haakonhyrve/">LinkedIn</a>
-        <a href="snldactle.html">SNLdactle</a>
-      </nav>
-    </header>
+    <div id="header-container"></div>
 
     <main>
       <section id="intro" aria-labelledby="intro-heading">
@@ -35,8 +39,6 @@
       </section>
     </main>
 
-    <footer>
-      <p>© 2025 Håkon Liltved Hyrve</p>
-    </footer>
+    <div id="footer-container"></div>
   </body>
 </html>

@@ -11,19 +11,8 @@
       href="assets/img/favicon.ico"
     />
   </head>
-  <script>
-    async function loadComponent(url, elementId) {
-      const response = await fetch(url);
-      const text = await response.text();
-      document.getElementById(elementId).innerHTML = text;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadComponent("components/header.html", "header-container");
-      loadComponent("components/footer.html", "footer-container");
-    });
-  </script>
   <body>
+    <script src="assets/js/components.js"></script>
     <div id="header-container"></div>
 
     <main>

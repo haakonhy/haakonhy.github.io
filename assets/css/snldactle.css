@@ -1,34 +1,35 @@
-body {
-  font-family: system-ui, Arial;
-  padding: 24px;
-  line-height: 1.6;
-}
 #article {
   margin-top: 16px;
   white-space: pre-wrap;
 }
+
 .censored {
   background: #111;
   color: #111;
   border-radius: 2px;
   padding: 0 2px;
 }
+
 .revealed {
   color: inherit;
   background: transparent;
 }
+
 .token {
   margin-right: 2px;
   display: inline-block;
 }
+
 #guesses {
   margin-top: 12px;
 }
+
 #win {
   color: green;
   font-weight: 700;
   margin-top: 12px;
 }
+
 #win-image {
-	size: 25vh;
+  size: 25vh;
 }

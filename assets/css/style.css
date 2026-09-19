@@ -1,3 +1,21 @@
+
+:root {
+  --color-bg: #ededed;
+  --color-bg-alt: #faf6ef;
+  --color-text: #000000;
+  --color-text-muted: #7a6c61;
+  --color-accent-primary: #c1603b;
+  --color-accent-primary-dark: #a34f30;
+  --color-accent-secondary: #d6a24a;
+  --color-accent-tertiary: #7c8b6f;
+  --color-accent-pop: #e08a6c;
+  --color-accent-navy: #123456;
+  --color-accent-navy-light: #1d4d7e;
+  --color-accent-yellow: #fedd03;
+  --font-heading: "Lora", Georgia, serif;
+  --font-body: "Karla", "Work Sans", sans-serif;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,13 +28,21 @@ body {
 }
 
 body {
-  font-family: Arial, sans-serif, system-ui;
+  font-family: var(--font-body);
   min-height: 100vh;
   line-height: 1.6;
-  background-color: #fafafa;
-  color: #222;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
 }
 
 main {
@@ -29,8 +55,8 @@ main {
 
 header,
 footer {
-  background-color: #123456;
-  color: #fafafa;
+  background-color: var(--color-accent-navy);
+  color: var(--color-bg-alt);
   padding: 1rem;
 }
 
@@ -39,23 +65,39 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+.site-title {
+  color: var(--color-bg-alt);
+  font-family: var(--font-heading);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 0.25rem;
 }
 
-header h1 {
-  margin: 0;
+.site-title:hover,
+.site-title:focus {
+  text-decoration: underline;
+  outline: none;
 }
 
 nav a {
-  color: #fafafa;
+  color: var(--color-bg-alt);
   margin-right: 1rem;
   text-decoration: none;
+  opacity: 0.9;
 }
 
 nav a:hover,
 nav a:focus {
   text-decoration: underline;
+  opacity: 1;
   outline: none;
+}
+
+footer {
+  text-align: left;
 }
 
 #intro {
@@ -64,6 +106,7 @@ nav a:focus {
   justify-content: space-between;
   padding: 2rem;
   margin: 0 auto;
+  gap: 2rem;
 }
 
 .intro-text {
@@ -79,11 +122,13 @@ nav a:focus {
   align-items: center;
 }
 
-.container embed {
+.container embed,
+.container object {
   width: 60%;
   height: 100%;
   min-height: 500px;
   border: none;
+  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.15);
 }
 
 .portrait img {

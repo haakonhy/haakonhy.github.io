@@ -1,35 +1,246 @@
-#article {
-  margin-top: 16px;
-  white-space: pre-wrap;
+#guess-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap; 
 }
 
-.censored {
-  background: #111;
-  color: #111;
-  border-radius: 2px;
-  padding: 0 2px;
+#guess-form input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(59, 47, 42, 0.2);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
 }
 
-.revealed {
-  color: inherit;
+#guess-form input:focus {
+  outline: 2px solid var(--color-accent-secondary);
+  outline-offset: 1px;
+}
+
+#guess-form button {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+}
+
+button.secondary {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-accent-primary);
+  border: 1px solid var(--color-accent-primary);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--color-accent-primary);
+  color: var(--color-bg-alt);
+}
+
+button.secondary:disabled {
+  color: var(--color-text-muted);
+  border-color: var(--color-text-muted);
   background: transparent;
 }
 
-.token {
-  margin-right: 2px;
-  display: inline-block;
+#help-open {
+  margin-bottom: 1.25rem;
 }
 
-#guesses {
-  margin-top: 12px;
+
+#message {
+  min-height: 1.6em;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
 }
 
-#win {
-  color: green;
+#game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 16rem;
+  gap: 2rem;
+  align-items: start;
+}
+
+#guess-panel {
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  #game-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+#article-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+#article p {
+  margin-bottom: 0.9em;
+}
+
+#article h3 {
+  margin: 1.2em 0 0.4em;
+}
+
+.censored {
+  background: var(--color-text);
+  color: var(--color-text);
+  border-radius: 2px;
+}
+
+.shown-prefix {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.highlight {
+  background: var(--color-accent-secondary);
+  border-radius: 2px;
+}
+
+.highlight-current {
+  outline: 2px solid var(--color-accent-primary);
+}
+
+.just-revealed {
+  animation: reveal-glow 1.2s ease-out;
+}
+
+@keyframes reveal-glow {
+  from {
+    background: var(--color-accent-pop);
+}
+}
+
+#guess-counter {
+  margin-bottom: 0.5rem;
+}
+
+#guess-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+#guess-table th {
+  text-align: left;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(59, 47, 42, 0.2);
+}
+
+#guess-table th,
+#guess-table td {
+  padding: 0.15rem 0.4rem;
+}
+
+#guess-table th:first-child,
+#guess-table td:first-child,
+#guess-table th:last-child,
+#guess-table td:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.guess {
+  cursor: pointer;
+}
+
+.guess:hover,
+.guess.selected {
+  background: var(--color-bg-alt);
+}
+
+.guess:focus-visible {
+  outline: 2px solid var(--color-accent-secondary);
+}
+
+.guess.no-hits {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.guess.flash {
+  animation: flash-row 0.9s ease-out;
+}
+
+@keyframes flash-row {
+  0%,
+  50% {
+    background: var(--color-accent-secondary);
+  }
+}
+
+#hints {
+  margin-bottom: 1rem;
+}
+
+#hint-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hint {
+  background: var(--color-bg-alt);
+  border: 1px solid rgba(59, 47, 42, 0.1);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+}
+
+.hint.just-unlocked {
+  animation: reveal-glow 1.2s ease-out;
+}
+
+.hint-image-frame {
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: 0.4rem;
+  width: fit-content;
+}
+
+.hint-image {
+  display: block;
+  max-height: 160px;
+  max-width: 100%;
+  transition: filter 0.8s ease;
+}
+
+#next-hint {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+#game-ended {
+  margin: 1rem 0;
+}
+
+#game-ended a {
+  color: var(--color-accent-primary);
+  font-weight: 600;
+}
+
+.end-won {
+  color: var(--color-accent-tertiary);
+  font-weight: 700;
+}
+
+.end-gave-up {
   font-weight: 700;
   margin-top: 12px;
 }
 
-#win-image {
-  size: 25vh;
+#end-image {
+  display: block;
+  max-width: 100%;
+  max-height: 25vh;
+  width: auto;
+  margin: 1em 0;
 }

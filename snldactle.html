@@ -1,13 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nb">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SNLdactle</title>
-    <link rel="stylesheet" href="assets/css/snldactle.css" />
+    <meta
+      name="description"
+      content="SNLdactle: Gjett deg fram til en skjult artikkel fra Store norske leksikon, ett ord om gangen."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/snldactle.css" />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-    <script src="assets/js/snldactle.js" defer></script>
+    <script src="assets/js/snldactle/main.js"></script>
   </head>
 
   <body>
@@ -15,16 +25,58 @@
     <div id="header-container"></div>
     
     <main>
-      <label>
-        Gjett et ord:
-        <input id="guess" />
-        <button id="submit">Gjett</button>
-      </label>
+      <h1>SNLdactle</h1>
+      <p class="subtitle">
+        Gjett deg fram til en artikkel fra Store norske leksikon. Inspirert av
+        <a
+          href="https://redactle.net/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Redactle</a
+        >.
+      </p>
+      <form id="guess-form">
+        <label for="guess">Gjett et ord:</label>
+        <input
+          id="guess"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          disabled
+        />
+        <button id="submit" type="submit" disabled>Gjett</button>
+        <button id="give-up" type="button" class="secondary" disabled>
+          Gi opp
+        </button>
+      </form>
+      <p id="message" role="status" aria-live="polite"></p>
 
-      <div id="win" hidden>🎉 Du vant!</div>
-      <div id="guesses"></div>
-      <h1 id="article-title"></h1>
+      <div id="game-ended" hidden></div>
+
+      <div id="game-layout">
+        <section id="article-column">
+          <h2 id="article-title"></h2>
       <div id="article"></div>
+        </section>
+
+        <aside id="guess-panel">
+          <section id="hints">
+            <ul id="hint-list"></ul>
+            <p id="next-hint"></p>
+          </section>
+          <p id="guess-counter">Gjett: <strong id="guess-count">0</strong></p>
+          <table id="guess-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ord</th>
+                <th>Treff</th>
+              </tr>
+            </thead>
+            <tbody id="guess-list"></tbody>
+          </table>
+        </aside>
+      </div>
     </main>
     
     <div id="footer-container"></div>

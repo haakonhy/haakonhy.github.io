@@ -57,15 +57,6 @@ const hintsView = new HintsView({
   next: document.getElementById("next-hint"),
 });
 
-setUpHelp({
-  openButton: /** @type {HTMLButtonElement} */ (
-    document.getElementById("help-open")
-  ),
-  dialog: /** @type {HTMLDialogElement} */ (
-    document.getElementById("help-dialog")
-  ),
-  hintList: document.getElementById("help-hints"),
-});
 
 /** @type {Game | null} */
 let game = null;
